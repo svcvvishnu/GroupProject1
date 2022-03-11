@@ -4,6 +4,7 @@ import com.csci5308.w22.wiseshopping.models.*;
 import com.csci5308.w22.wiseshopping.repository.MerchantRepository;
 import com.csci5308.w22.wiseshopping.repository.ProductCategoryRepository;
 import com.csci5308.w22.wiseshopping.repository.ProductInventoryRepository;
+import com.csci5308.w22.wiseshopping.repository.TagsRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,9 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Elizabeth James
@@ -29,6 +28,9 @@ public class MerchantServiceTests {
 
     @Mock
     private ProductInventoryRepository mockedInventoryRepository;
+
+    @Mock
+    private TagsRepository tagsRepository;
 
     @InjectMocks
     private MerchantService merchantService;
@@ -220,6 +222,18 @@ public class MerchantServiceTests {
         IllegalArgumentException ex = Assertions.assertThrows( IllegalArgumentException.class,
                 () -> merchantService.updateProductCategoryDescription(1, "Category Desc Updated"), "Exception not thrown");
         Assertions.assertTrue(ex.getMessage().contains("Could not find category with given Id:"));
+    }
+
+    @Test
+    public void testUpdateProductTags(){
+
+        Tags tag = new Tags(new Product("ProductName", "ProductDesc"), "Tag1");
+
+        when(tagsRepository.save(any())).thenReturn(tag);
+        Tags newTag = merchantService.updateProductTags(tag.getProduct(), tag.getTagName());
+
+        Assertions.assertEquals(tag.getProduct(), newTag.getProduct());
+        Assertions.assertEquals(tag.getTagName(), newTag.getTagName());
     }
 
 

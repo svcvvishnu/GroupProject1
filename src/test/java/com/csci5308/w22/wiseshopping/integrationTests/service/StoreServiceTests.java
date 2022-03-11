@@ -84,6 +84,19 @@ public class StoreServiceTests {
         Assertions.assertTrue(storeService.remove(storeList.stream().findFirst().get().getStoreId()));
     }
 
+    @Test
+    public void testGetStoresByLocationAndMerchant(){
+        storeService.addStore("Timbuktu", "private", "11", "12", "John Doe", merchant,location);
+        List<Store> storeList = storeService.getStoresByLocationAndMerchant(location, merchant);
+        Assertions.assertEquals(1, storeList.size());
+        Store s = storeList.get(0);
+        Assertions.assertEquals("Timbuktu", s.getStoreName());
+        Assertions.assertEquals("private", s.getType());
+        Assertions.assertEquals("John Doe", s.getContact());
+        Assertions.assertEquals(merchant, s.getMerchant());
+        Assertions.assertEquals(location, s.getLocation());
+    }
+
     @AfterEach
     public void cleanUp(){
         locationService.remove(location);

@@ -177,16 +177,8 @@ public class MerchantService {
 
     @Transactional
     public Tags updateProductTags(Product product, String name) {
-
-        Tags tags= tagsRepository.findByTagName(name);
-
-        if (tags == null) {
-            throw new IllegalArgumentException("Could not find tags with product Id: " + tags);
-        }
-        tags.setTagName(name);
-        tagsRepository.save(tags);
-        return tags;
-
+        Tags tag = new Tags(product, name);
+        return tagsRepository.save(tag);
     }
 
 }
