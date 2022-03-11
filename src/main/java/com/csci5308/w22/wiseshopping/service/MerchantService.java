@@ -6,6 +6,7 @@ import com.csci5308.w22.wiseshopping.models.*;
 import com.csci5308.w22.wiseshopping.repository.MerchantRepository;
 import com.csci5308.w22.wiseshopping.repository.ProductCategoryRepository;
 import com.csci5308.w22.wiseshopping.repository.ProductInventoryRepository;
+import com.csci5308.w22.wiseshopping.repository.TagsRepository;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ public class MerchantService {
     MerchantRepository merchantRepository;
     ProductInventoryRepository productInventoryRepository;
     ProductCategoryRepository productCategoryRepository;
-
+    TagsRepository tagsRepository;
     /**
      * inserts a merchant into table
      *
@@ -160,6 +161,7 @@ public class MerchantService {
         return category;
     }
 
+
     @Transactional
     public ProductCategory updateProductCategoryDescription(int productCategoryId, String description) {
         ProductCategory category = productCategoryRepository.findByProductCategoryId(productCategoryId);
@@ -172,4 +174,19 @@ public class MerchantService {
         productCategoryRepository.save(category);
         return category;
     }
+
+    @Transactional
+    public Tags updateProductTags(Product product, String name) {
+
+        Tags tags= tagsRepository.findByTagName(name);
+
+        if (tags == null) {
+            throw new IllegalArgumentException("Could not find tags with product Id: " + tags);
+        }
+        tags.setTagName(name);
+        tagsRepository.save(tags);
+        return tags;
+
+    }
+
 }

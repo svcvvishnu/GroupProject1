@@ -119,7 +119,6 @@ public class MerchantServiceTests {
     @Test
     public void testInputParametersForLoginMerchant(){
 
-
         IllegalArgumentException emailNullException=Assertions.assertThrows(IllegalArgumentException.class, () -> merchantService.loginMerchant(null,"test_password"));
         Assertions.assertEquals("email cannot be null",emailNullException.getMessage());
         IllegalArgumentException emailEmptyException=Assertions.assertThrows(IllegalArgumentException.class, () -> merchantService.loginMerchant("","test_password"));
@@ -131,9 +130,6 @@ public class MerchantServiceTests {
         Assertions.assertEquals("password cannot be empty",passwordEmptyException.getMessage());
         IllegalArgumentException passwordNullException=Assertions.assertThrows(IllegalArgumentException.class, () -> merchantService.loginMerchant("test_email@xyz.com",null));
         Assertions.assertEquals("password cannot be null",passwordNullException.getMessage());
-
-
-
     }
     @Test
     public void testUpdateProductPrice(){
@@ -225,5 +221,8 @@ public class MerchantServiceTests {
                 () -> merchantService.updateProductCategoryDescription(1, "Category Desc Updated"), "Exception not thrown");
         Assertions.assertTrue(ex.getMessage().contains("Could not find category with given Id:"));
     }
+
+
+
 
 }

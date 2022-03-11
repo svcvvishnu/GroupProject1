@@ -3,6 +3,17 @@ show databases;
 use CSCI5308_8_DEVINT;
 show tables;
 
+CREATE TABLE `user_details` (
+`user_id` int NOT NULL AUTO_INCREMENT,
+`first_name` varchar(255) DEFAULT NULL,
+`last_name` varchar(255) DEFAULT NULL,
+`email` varchar(255) NOT NULL unique,
+`password` varchar(255) NOT NULL,
+`contact` varchar(10) DEFAULT NULL,
+`register_at` datetime  DEFAULT NULL,
+PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
 
 CREATE TABLE `location` (
 `location_id` int NOT NULL AUTO_INCREMENT ,
@@ -12,7 +23,6 @@ CREATE TABLE `location` (
 `country` varchar(255) DEFAULT NULL,
 PRIMARY KEY (`location_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
 
 
 DROP TABLE IF EXISTS `merchant_details`;
@@ -103,17 +113,14 @@ CONSTRAINT `user_subscrptn_fk` FOREIGN KEY (`user_id`) REFERENCES `user_details`
 CONSTRAINT `subs_prod_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
-
 CREATE TABLE `tags` (
 `tag_id` int NOT NULL AUTO_INCREMENT,
-`inventory_id` int NOT NULL,
+`product_id` int NOT NULL,
 `tag_name` varchar(255) DEFAULT NULL,
-`tag_desc` varchar(255) DEFAULT NULL,
 PRIMARY KEY (`tag_id`),
-KEY `tag_prodinv_fk` (`inventory_id`),
-CONSTRAINT `tag_prodinv_fk` FOREIGN KEY (`inventory_id`) REFERENCES `product_inventory` (`inventory_id`)
+KEY `tag_product_fk` (`product_id`),
+CONSTRAINT `tag_prodinv_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
 
 CREATE TABLE `cart` (
 `cart_id` int NOT NULL AUTO_INCREMENT,
