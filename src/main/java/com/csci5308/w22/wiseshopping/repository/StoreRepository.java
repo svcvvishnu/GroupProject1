@@ -23,4 +23,6 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
     List<Store> findByLocationIdAndMerchantId(int locationId, int merchantId);
 
     Integer deleteByStoreId (int id);
+
+    Store findByStoreId(int storeId);
 }
